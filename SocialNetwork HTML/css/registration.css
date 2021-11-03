@@ -1,0 +1,95 @@
+/* Основной стиль */
+
+body {
+    background-image       : url(../images/background.jpg);
+    background-repeat      : no-repeat;
+    background-position    : center center;
+    background-attachment  : fixed;
+    -webkit-background-size: cover;
+    -moz-background-size   : cover;
+    -o-background-size     : cover;
+    background-size        : cover;
+}
+
+.wrapper {
+    height         : 100vh;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+}
+
+/*  Стиль основной части */
+
+.main-title {
+    margin-bottom: 60px;
+    text-shadow  : 0px 5px 5px rgb(0, 0, 0), 0 0 1em rgba(150, 147, 147, 0);
+    color        : white;
+    font-size    : 40px;
+    font-weight  : 600;
+}
+
+main {
+    margin-bottom   : 60px;
+    background-color: white;
+    border-radius   : 10px;
+    text-align      : center;
+    position        : relative;
+    max-width       : 700px;
+    width           : 100%;
+}
+
+.register-form-container {
+    padding: 40px;
+}
+
+.form-title {
+    font-weight  : 600;
+    margin-bottom: 30px;
+}
+
+.row-form-field {
+    display      : flex;
+    text-align   : left;
+    width        : 100%;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    text-align   : left;
+}
+
+.field-name {
+    margin-right: 30px;
+    flex-basis  : 100%;
+}
+
+.field-surname {
+    flex-basis: 100%;
+}
+
+.form-buttons {
+    display        : flex;
+    justify-content: center;
+    margin-top     : 55px;
+}
+
+.registration-btn {
+    font-weight     : 500;
+    font-size       : 16px;
+    width           : 300px;
+    transition      : .2s ease-in-out;
+    text-decoration : none;
+    outline         : none;
+    border-radius   : 25px;
+    padding         : 3px 30px;
+    border          : 2px solid black;
+    background-color: black;
+    color           : white;
+}
+
+.registration-btn:hover {
+    border          : 2px solid rgb(75, 75, 75);
+    background-color: rgb(75, 75, 75);
+}

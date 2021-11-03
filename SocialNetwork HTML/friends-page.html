@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/friends-page.css">
+
+    <title>Friends page</title>
+</head>
+
+<body>
+    <div class="sidebar open">
+
+        <!-- Заголовок и логотип -->
+        <div class="logo-details">
+            <!-- <i class='bx bxl-c-plus-plus icon'></i> -->
+            <div class="logo-name">Society</div>
+            <i class="fal fa-bars" id="btn"></i>
+        </div>
+
+        <!-- Список сайдбара -->
+        <ul class="nav-list">
+            <li>
+                <a href="#">
+                    <i class="fal fa-user-circle"></i>
+                    <span class="links-name">Моя страница</span>
+                </a>
+                <span class="tooltip">Моя страница</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-newspaper"></i>
+                    <span class="links-name">Публикации</span>
+                </a>
+                <span class="tooltip">Публикации</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-user-friends"></i>
+                    <span class="links-name">Друзья</span>
+                </a>
+                <span class="tooltip">Друзья</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-sign-out rotate"></i>
+                    <span class="links-name">Выйти</span>
+                </a>
+                <span class="tooltip">Выйти</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">
+                    <div class="name-job">
+                        <div class="name">© 2021 Harashimahashi</div>
+                    </div>
+                    <i id="log_out"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <section class="home-section">
+
+        <!-- Заголовок -->
+        <div class="page-title">
+            <h4>Сообщество</h4>
+        </div>
+        <hr class="hr-shadow">
+
+        <div class="content">
+            <div class="users-list">
+                <div class="page-subtitle">
+                    <h5>Люди</h5>
+                </div>
+
+                <!-- Форма поиска -->
+                <div class="search">
+                    <form>
+                        <input type="text" placeholder="Найти...">
+                        <button type="submit"><i class="far fa-search"></i></button>
+                    </form>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва, 19 лет</span>
+                    </div>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва</span>
+                    </div>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва</span>
+                    </div>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва</span>
+                    </div>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва</span>
+                    </div>
+                </div>
+
+                <div class="item-user">
+                    <img class="item-user__image" src="./images/foto.jpg" alt="foto">
+                    <div class="item-user__title">Мария Литвинова
+                        <span class="item-user__city"> Москва</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Список-панель справа -->
+            <div class="block-panel">
+                <div>
+                    <div class="panel">
+                        <ul>
+                            <li>Все пользователи</li>
+                            <li>Мои друзья</li>
+                            <li>Подписчики</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();//calling the function(optional)
+        });
+
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+            }
+        }
+    </script>
+</body>
+
+</html>

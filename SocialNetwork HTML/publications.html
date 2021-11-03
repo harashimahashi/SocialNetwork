@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/publications.css">
+
+    <title>Publications page</title>
+</head>
+
+<body>
+    <div class="sidebar open">
+
+        <!-- Заголовок и логотип -->
+        <div class="logo-details">
+            <!-- <i class='bx bxl-c-plus-plus icon'></i> -->
+            <div class="logo-name">Society</div>
+            <i class="fal fa-bars" id="btn"></i>
+        </div>
+
+        <!-- Список сайдбара -->
+        <ul class="nav-list">
+            <li>
+                <a href="#">
+                    <i class="fal fa-user-circle"></i>
+                    <span class="links-name">Моя страница</span>
+                </a>
+                <span class="tooltip">Моя страница</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-newspaper"></i>
+                    <span class="links-name">Публикации</span>
+                </a>
+                <span class="tooltip">Публикации</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-user-friends"></i>
+                    <span class="links-name">Друзья</span>
+                </a>
+                <span class="tooltip">Друзья</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fal fa-sign-out rotate"></i>
+                    <span class="links-name">Выйти</span>
+                </a>
+                <span class="tooltip">Выйти</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">
+                    <div class="name-job">
+                        <div class="name">© 2021 Harashimahashi</div>
+                    </div>
+                    <i id="log_out"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <section class="home-section">
+
+        <!-- Заголовок -->
+        <div class="page-title">
+            <h4>Публикации</h4>
+        </div>
+        <hr class="hr-shadow">
+
+        <div class="content">
+            <div class="publications-list">
+                <div class="page-subtitle">
+                    <h5>Все публикации</h5>
+                </div>
+
+                <!-- Форма поиска -->
+                <div class="search">
+                    <form class="form-seacrh">
+                        <input class="input-search" type="text" placeholder="Найти...">
+                        <button class="button-search" type="submit">
+                            <i class="far fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <button class="add-btn" type="submit">Добавить публикацию</button>
+
+                <div class="item-publication">
+
+                    <div class="user">
+                        <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                        <div class="item-publication__user-title">Мария Литвинова</div>
+                    </div>
+
+                    <div class="block-pulication">
+                        <div class="item-publication__title">В городке появились инопланетяне</div>
+                        <div class="item-publication__description">
+                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, at vel cum dolores
+                                omnis aliquam rerum a ducimus debitis eius repellendus sint iure tempore temporibus
+                                atque
+                                consequuntur modi, repellat totam?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, aspernatur labore
+                                laboriosam possimus natus voluptatem voluptas qui dignissimos dolor obcaecati iste
+                                consectetur veniam voluptatibus eos, sequi rem itaque? Harum, reprehenderit.
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat labore autem
+                                accusantium
+                                amet praesentium architecto voluptatibus quo delectus omnis temporibus, minus ullam
+                                dolorum,
+                                beatae quidem, dignissimos possimus sunt quis sed.
+                            </span>
+                        </div>
+
+                        <div class="block-image">
+                            <img class="item-publication__image" src="./images/publication.jpg" alt="foto">
+                        </div>
+
+
+                        <div class="item-publication__icons">
+                            <div class="icon-like">
+                                <i class="fas fa-heart"></i>
+                                <span class="count">39</span>
+                            </div>
+
+                            <div class="icon-comment">
+                                <i class="fas fa-comment"></i>
+                                <span class="count">15</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="comments">
+                        <div class="user-comment">
+                            <div class="user-comment__user">
+                                <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                                <div class="item-publication__user-title">Иван Нимеринов</div>
+                            </div>
+
+                            <div class="user-comment__text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum magni consectetur ipsum
+                                veniam, porro tempora
+                                odit,
+                                possimus omnis molestiae perferendis natus commodi veritatis. Et perspiciatis molestiae
+                                ab, eaque numquam earum?
+                            </div>
+
+                            <div class="block-down">
+                                <div class="user-comment__icons">
+                                    <div class="icon-comment-like">
+                                        <i class="fas fa-heart"></i>
+                                        <span class="count">3</span>
+                                    </div>
+                                </div>
+
+                                <form>
+                                    <button class="btn-answer">Ответить</button>
+                                </form>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <form>
+                            <button class="more-comments">Показать остальные...</button>
+                        </form>
+
+
+                    </div>
+
+                    <div class="user-new-comment__user">
+                        <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                        <textarea id="textarea" placeholder="Новый комментарий..."></textarea>
+                        <button class="btn-send"><i class="fas fa-angle-double-right"></i></button>
+                    
+                    </div>
+
+                </div>
+                <div class="block-margin"></div>
+            </div>
+    </section>
+
+
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        // Для автоматического изменения высоты textarea
+        const textarea = document.getElementById("textarea");
+        textarea.style.cssText = `height: ${textarea.scrollHeight}px; overflow-y:hidden`;
+        textarea.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`;
+        });
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();//calling the function(optional)
+        });
+
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+            }
+        }
+    </script>
+</body>
+
+</html>
