@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using SocialNetwork.Models;
+using SocialNetwork.Services;
 
 namespace SocialNetwork
 {
@@ -16,6 +19,14 @@ namespace SocialNetwork
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.Configure<SocialNetworkDatabaseSettings>(
+                Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)));
+
+            services.AddSingleton<ISocialNetworkDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
+
+            services.AddSingleton<UserService>();
 
             // Добавление служб репозиториев
             //services.AddScoped<IBookRepository, BookRepository>();
@@ -41,6 +52,8 @@ namespace SocialNetwork
                 // Стандартный путь "{controller=Home}/{action=Index}/{id?}"
                 endpoints.MapDefaultControllerRoute();
             });
+
+            SeedData.EnsurePopulated(app);
         }
     }
 }
