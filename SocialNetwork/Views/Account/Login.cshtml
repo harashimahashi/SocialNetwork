@@ -1,0 +1,73 @@
+﻿<link rel="stylesheet" href="~/css/login.css">
+
+<div class="wrapper">
+
+    <div class="main-title">
+        Society
+    </div>
+
+    <!-- Страница входа -->
+    <main>
+
+        <div class="register-form-container">
+            <h5 class="form-title">Вход</h5>
+
+            <div class="form-fields">
+                <form class="needs-validation" novalidate>
+
+                    <div class="form-field">
+                        <label for="Mail" class="form-label">Почта</label>
+                        <input class="form-control" type="text" id="Mail" required>
+                        <div class="invalid-feedback">Пожалуйста, введите свою почту</div>
+                        <div class="valid-feedback">Ок!</div>
+                    </div>
+
+
+                    <div class="form-field">
+                        <label for="Password" class="form-label">Пароль</label>
+                        <input class="form-control" type="password" id="Password" required>
+                        <div class="invalid-feedback">Пожалуйста, введите свой пароль</div>
+                        <div class="valid-feedback">Ок!</div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button class="login-btn" type="submit">Войти</button>
+                        <button class="registration-btn" type="submit">Регистрация</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+<script>
+    // Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
+    (function () {
+        'use strict'
+
+        // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Зацикливайтесь на них и предотвращайте отправку
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

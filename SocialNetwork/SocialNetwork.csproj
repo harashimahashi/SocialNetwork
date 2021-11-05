@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\UserService.cs~RF7551d0.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Migrations\" />

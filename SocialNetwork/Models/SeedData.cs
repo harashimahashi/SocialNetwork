@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SocialNetwork.Services;
 
@@ -14,7 +10,8 @@ namespace SocialNetwork.Models
         {
             UserService user = app.ApplicationServices.CreateScope().ServiceProvider.GetService<UserService>();
 
-            if (user.Get().Count == 0) {
+            if (user.Get().Count == 0)
+            {
                 user.Create(
                     new Entities.User
                     {

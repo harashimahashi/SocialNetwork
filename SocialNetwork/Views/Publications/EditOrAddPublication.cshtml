@@ -1,0 +1,82 @@
+﻿<link rel="stylesheet" href="~/css/publications-form.css">
+
+<section class="home-section">
+
+    <!-- Заголовок -->
+    <div class="page-title">
+        <h4>Добавление \ редактирование публикации</h4>
+    </div>
+    <hr class="hr-shadow">
+
+    <!-- Блок формы с полями для заполнения -->
+
+    <div class="form">
+        <form class="needs-validation" novalidate>
+            <div class="block-form">
+
+                <div class="block-input">
+                    <label for="Name" class="form-label">Название публикации</label>
+                    <input class="form-control form-control-sm" type="text" id="Name"
+                           value="В городке появились инопланетяне" required>
+                    <div class="invalid-feedback">Пожалуйста, укажите название публикации</div>
+                    <div class="valid-feedback">Ок!</div>
+                </div>
+
+                <div class="block-input">
+                    <label for="Annotation" class="form-label">Описание публикации</label>
+                    <textarea class="form-control annotation" id="Annotation" rows="10" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel itaque quia eos! Quidem, magni vitae commodi iure amet minus enim labore odit porro quod, earum ad cumque corrupti laboriosam itaque!
+                    </textarea>
+                    <div class="invalid-feedback">Пожалуйста, внесите текст публикации</div>
+                    <div class="valid-feedback">Ок!</div>
+                </div>
+                <div>
+                    <input type="file" accept="image/jpeg" class="form-control form-control-sm" required>
+                    <div class="invalid-feedback">Пожалуйста, загрузите картинку для публикации</div>
+                    <div class="valid-feedback">Ок!</div>
+                </div>
+
+
+                <div class="block-img-publication">
+                    <div>Текущее изображение:</div>
+                    <div>
+                        <img class="img-publication" src="images/background.jpg" alt="Обложка книги">
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-btn">
+                <button class="save-btn" type="submit">Добавить</button>
+                <button class="cancel-btn">Отмена</button>
+            </div>
+        </form>
+    </div>
+
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+<script>
+    // Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
+    (function () {
+        'use strict'
+
+        // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Зацикливайтесь на них и предотвращайте отправку
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

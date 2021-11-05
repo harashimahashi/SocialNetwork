@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="~/css/general.css">
-    <link rel="stylesheet" href="~/css/main-page.css">
 
     <title>Society</title>
 </head>
@@ -27,6 +26,14 @@
         let sidebar = document.querySelector(".sidebar");
         let closeBtn = document.querySelector("#btn");
         let searchBtn = document.querySelector(".bx-search");
+
+        // Для автоматического изменения высоты textarea
+        const textarea = document.getElementById("textarea");
+        textarea.style.cssText = `height: ${textarea.scrollHeight}px; overflow-y:hidden`;
+        textarea.addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`;
+        });
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");

@@ -27,12 +27,6 @@ namespace SocialNetwork
                 sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
 
             services.AddSingleton<UserService>();
-
-            // Добавление служб репозиториев
-            //services.AddScoped<IBookRepository, BookRepository>();
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IOrderRepository, OrderRepository>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
