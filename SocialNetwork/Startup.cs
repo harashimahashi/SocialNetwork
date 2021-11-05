@@ -44,7 +44,8 @@ namespace SocialNetwork
             app.UseEndpoints(endpoints =>
             {
                 // Стандартный путь "{controller=Home}/{action=Index}/{id?}"
-                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Publications}/{action=Index}/{id?}");
             });
 
             SeedData.EnsurePopulated(app);
