@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SocialNetwork.Models;
-using SocialNetwork.Services;
+using SocialNetwork.Models.Entities;
 
 namespace SocialNetwork
 {
@@ -20,13 +21,20 @@ namespace SocialNetwork
         {
             services.AddControllersWithViews();
 
-            services.Configure<SocialNetworkDatabaseSettings>(
-                Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)));
+            //services.Configure<SocialNetworkDatabaseSettings>(
+            //    Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)));
 
-            services.AddSingleton<ISocialNetworkDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
+            //services.AddSingleton<ISocialNetworkDatabaseSettings>(sp =>
+            //    sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
 
-            services.AddSingleton<UserService>();
+            var mongoDbSettings = Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)).Get<SocialNetworkDatabaseSettings>();
+            services.AddIdentity<ApplicationUser, Role>(op => op.User.AllowedUserNameCharacters = null)
+                .AddMongoDbStores<ApplicationUser, Role, Guid>
+                (
+                    mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
+                );
+
+            //services.AddSingleton<UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,7 +56,7 @@ namespace SocialNetwork
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Publications}/{action=Index}/{id?}");
             });
 
-            SeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
