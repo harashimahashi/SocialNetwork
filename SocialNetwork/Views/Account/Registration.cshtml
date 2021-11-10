@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "_AccountLayout";
 }
+@model User
 
 <link rel="stylesheet" href="~/css/registration.css">
 
@@ -16,34 +17,34 @@
             <h5 class="form-title">Регистрация</h5>
 
             <div class="form-fields">
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" asp-action="Registration" method="post" novalidate>
 
                     <div class="row-form-field">
                         <div class="field-name">
-                            <label for="Name" class="form-label">Имя</label>
-                            <input class="form-control" type="text" id="Mail" required>
+                            <label asp-for="FirstName" class="form-label">Имя</label>
+                            <input asp-for="FirstName" class="form-control" type="text" required>
                             <div class="invalid-feedback">Пожалуйста, введите свое имя</div>
                             <div class="valid-feedback">Ок!</div>
                         </div>
 
                         <div class="field-surname">
-                            <label for="Surname" class="form-label">Фамилия</label>
-                            <input class="form-control" type="text" id="Surname" required>
+                            <label asp-for="LastName" class="form-label">Фамилия</label>
+                            <input asp-for="LastName" class="form-control" type="text" required>
                             <div class="invalid-feedback">Пожалуйста, введите свою фамилию</div>
                             <div class="valid-feedback">Ок!</div>
                         </div>
                     </div>
 
                     <div class="form-field">
-                        <label for="Mail" class="form-label">Почта</label>
-                        <input class="form-control" type="text" id="Mail" required>
+                        <label asp-for="Email" class="form-label">Почта</label>
+                        <input asp-for="Email" class="form-control" type="text" required>
                         <div class="invalid-feedback">Пожалуйста, введите свою почту</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>
 
                     <div class="form-field">
-                        <label for="Password" class="form-label">Пароль</label>
-                        <input class="form-control" type="password" id="Password" required>
+                        <label asp-for="Password" class="form-label">Пароль</label>
+                        <input asp-for="Password" class="form-control" type="password" required>
                         <div class="invalid-feedback">Пожалуйста, введите свой пароль</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>

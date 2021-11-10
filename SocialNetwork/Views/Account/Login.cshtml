@@ -17,11 +17,11 @@
             <h5 class="form-title">Вход</h5>
 
             <div class="form-fields">
-                <form class="needs-validation" novalidate>
+                <form class="needs-validation" asp-action="Login" method="post" novalidate>
 
                     <div class="form-field">
-                        <label for="Mail" class="form-label">Почта</label>
-                        <input class="form-control" type="text" id="Mail" required>
+                        <label class="form-label">Почта</label>
+                        <input name="email" class="form-control" type="text" id="Mail" required>
                         <div class="invalid-feedback">Пожалуйста, введите свою почту</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>
@@ -29,7 +29,7 @@
 
                     <div class="form-field">
                         <label for="Password" class="form-label">Пароль</label>
-                        <input class="form-control" type="password" id="Password" required>
+                        <input name="password" class="form-control" type="password" id="Password" required>
                         <div class="invalid-feedback">Пожалуйста, введите свой пароль</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>
