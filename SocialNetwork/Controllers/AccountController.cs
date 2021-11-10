@@ -11,11 +11,11 @@ namespace SocialNetwork.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<User> _userManager { get; set; }
-        public AccountController(UserManager<User> userManager)
-        {
-            _userManager = userManager;
-        }
+        //private UserManager<User> _userManager { get; set; }
+        //public AccountController(UserManager<User> userManager)
+        //{
+        //    _userManager = userManager;
+        //}
 
         public ActionResult Login()
         {
