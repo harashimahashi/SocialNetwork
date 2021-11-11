@@ -1,4 +1,7 @@
-﻿<link rel="stylesheet" href="~/css/main-page.css">
+﻿@using SocialNetwork.Models.Entities
+@model ApplicationUser
+
+<link rel="stylesheet" href="~/css/main-page.css">
 
 <section class="home-section">
 
@@ -14,28 +17,30 @@
             <button class="edit-btn" type="submit">Редактировать</button>
         </div>
         <div class="block-info">
-            <div class="block-info__name">Мария Литвинова</div>
-
-            <div class="block-info__status">Здесь есть статус бла бла</div>
-            <hr>
+            <div class="block-info__name">@Model.FirstName @Model.LastName</div>
+            <hr/>
 
             <table class="table">
                 <tbody>
                     <tr>
-                        <th class="col1">Имя/Никнейм:</th>
-                        <td>MariLi</td>
+                        <th class="col1">Имя</th>
+                        <td>@Model.FirstName</td>
+                    </tr>
+                    <tr>
+                        <th class="col1">Фамилия</th>
+                        <td>@Model.LastName</td>
                     </tr>
                     <tr>
                         <th class="col1">Место жительства:</th>
-                        <td>Москва</td>
+                        <td>@{var residence = Model.Residence ?? "Установите место жительства"; @residence}</td>
                     </tr>
                     <tr>
                         <th class="col1">Дата рождения:</th>
-                        <td>17 августа 1996</td>
+                        <td>@{var date = Model.BirthDate == new DateTime() ? "Установите дату рождения" : Model.BirthDate.ToShortDateString(); @date}</td>
                     </tr>
                     <tr>
                         <th class="col1">Email:</th>
-                        <td>maria@gmail.com</td>
+                        <td>@Model.UserName</td>
                     </tr>
                     <tr>
                         <th class="col1">Количество друзей:</th>
@@ -50,7 +55,7 @@
             </table>
 
             <div class="block-info__interests">Интересы: </div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias ipsum soluta dolor magni maiores impedit, temporibus saepe aspernatur totam, voluptate consequuntur. Animi nisi iusto rerum molestias voluptatem dicta vero eius? </div>
+            <div>@{var interests = Model.Interests ?? "Напишите что-нибудь о себе"; @interests}</div>
 
         </div>
     </div>
