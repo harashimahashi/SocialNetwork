@@ -13,8 +13,9 @@
 
     <div class="content">
         <div class="block-foto">
-            <img class="foto-img" src="./images/foto.jpg" alt="foto">
-            <button class="edit-btn" type="submit">Редактировать</button>
+            <img class="foto-img" src="~/images/foto.jpg" alt="foto">
+            @*<button class="edit-btn"></button>*@
+            <a asp-controller="Home" asp-action="EditUserPage">Редактировать</a>
         </div>
         <div class="block-info">
             <div class="block-info__name">@Model.FirstName @Model.LastName</div>

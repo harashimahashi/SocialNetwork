@@ -18,5 +18,10 @@ namespace SocialNetwork.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(user);
         }
+
+        public ActionResult EditUserPage()
+        {
+            return View();
+        }
     }
 }
