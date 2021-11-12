@@ -13,9 +13,9 @@
 
     <div class="content">
         <div class="block-foto">
-            <img class="foto-img" src="~/images/foto.jpg" alt="foto">
+            <img class="foto-img" src=@{var img = (Model.Image is not null) ? "data:image/jpeg;base64," + Convert.ToBase64String(Model.Image) : "~/images/background.jpg"; @img} alt="foto">
             @*<button class="edit-btn"></button>*@
-            <a asp-controller="Home" asp-action="EditUserPage">Редактировать</a>
+            <a class="edit-btn" asp-controller="Home" asp-action="EditUserPage">Редактировать</a>
         </div>
         <div class="block-info">
             <div class="block-info__name">@Model.FirstName @Model.LastName</div>

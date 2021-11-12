@@ -1,4 +1,7 @@
-﻿<link rel="stylesheet" href="~/css/main-page_form.css">
+﻿@using SocialNetwork.Models.ViewModels
+@model UserAndImageViewModel
+
+<link rel="stylesheet" href="~/css/main-page_form.css">
 
 <section class="home-section">
 
@@ -11,64 +14,62 @@
     <!-- Блок формы с полями для заполнения -->
 
     <div class="form">
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" asp-action="EditUserPage" method="post" enctype="multipart/form-data" novalidate>
             <div class="block-form">
 
                 <div class="block-input">
-                    <label for="Status" class="form-label">Статус</label>
-                    <input class="form-control form-control-sm" type="text" id="Status"
-                           value="Все сложно">
-                </div>
-
-                <div class="block-input">
-                    <label for="Name" class="form-label">Имя/Никнейм</label>
-                    <input class="form-control form-control-sm" type="text" id="Name" value="MariLi" required>
+                    <label asp-for="@Model.User.FirstName" class="form-label">Имя</label>
+                    <input asp-for="@Model.User.FirstName" class="form-control form-control-sm" type="text" value="@Model.User.FirstName" required>
                     <div class="invalid-feedback">Пожалуйста, укажите свое имя!</div>
                     <div class="valid-feedback">Ок!</div>
                 </div>
 
                 <div class="block-input">
-                    <label for="City" class="form-label">Город</label>
-                    <input class="form-control form-control-sm" type="text" id="City" value="Москва" required>
+                    <label asp-for="@Model.User.LastName" class="form-label">Фамилия</label>
+                    <input asp-for="@Model.User.LastName" class="form-control form-control-sm" type="text" value="@Model.User.LastName" required>
+                    <div class="invalid-feedback">Пожалуйста, укажите свою фамилию!</div>
+                    <div class="valid-feedback">Ок!</div>
+                </div>
+
+                <div class="block-input">
+                    <label asp-for="@Model.User.Residence" class="form-label">Город</label>
+                    <input asp-for="@Model.User.Residence" class="form-control form-control-sm" type="text" value="@{var residence = Model.User.Residence ?? "Установите место жительства"; @residence}" required>
                     <div class="invalid-feedback">Пожалуйста, укажите свой город!</div>
                     <div class="valid-feedback">Ок!</div>
                 </div>
 
                 <div class="block-input input-date">
-                    <label for="DateBirth" class="form-label">Дата рождения</label>
-                    <input class="form-control form-control-sm" type="date" id="DateBirth" value="25.12.1999" required>
+                    <label asp-for="@Model.User.BirthDate" class="form-label">Дата рождения</label>
+                    <input asp-for="@Model.User.BirthDate" class="form-control form-control-sm" type="date" value="@{var date = Model.User.BirthDate == new DateTime() ? "" : Model.User.BirthDate.ToString("yyyy-MM-dd"); @date}" required>
                     <div class="invalid-feedback">Пожалуйста, укажите свою дату рождения!</div>
                     <div class="valid-feedback">Ок!</div>
                 </div>
 
                 <div class="block-input">
-                    <label for="Email" class="form-label">Email</label>
-                    <input class="form-control form-control-sm" type="text" id="Email" value="maria@gmail.com">
-                </div>
-
-                <div class="block-input">
-                    <label for="Interests" class="form-label">Мои интересы</label>
-                    <textarea class="form-control annotation" id="Interests" rows="10">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel itaque quia eos! Quidem, magni vitae commodi iure amet minus enim labore odit porro quod, earum ad cumque corrupti laboriosam itaque!
+                    <label asp-for="@Model.User.Interests" class="form-label">Мои интересы</label>
+                    <textarea asp-for="@Model.User.Interests" class="form-control annotation" rows="10">@{var interests = Model.User.Interests ?? "Напишите что-нибудь о себе"; @interests}
                         </textarea>
                 </div>
 
                 <div>
-                    <label for="Avatar" class="form-label">Аватар</label>
-                    <input type="file" id="Avatar" accept="image/jpeg" class="form-control form-control-sm">
+                    <label asp-for="Image" class="form-label">Аватар</label>
+                    <input asp-for="Image" type="file" accept="image/jpeg" class="form-control form-control-sm" required>
                 </div>
 
-
+                @if (Model.User.Image is not null)
+                {
                 <div class="block-img-publication">
                     <div>Текущее изображение:</div>
                     <div>
-                        <img class="img-publication" src="~/images/background.jpg" alt="Обложка книги">
+                        <img class="img-publication" src="@("data:image/jpeg;base64," + Convert.ToBase64String(Model.User.Image))" alt="Аватарка">
                     </div>
                 </div>
+                }
             </div>
 
             <div class="block-btn">
                 <button class="save-btn" type="submit">Сохранить</button>
-                <button class="cancel-btn">Отмена</button>
+                <button class="cancel-btn" asp-action="Index">Отмена</button>
             </div>
         </form>
     </div>

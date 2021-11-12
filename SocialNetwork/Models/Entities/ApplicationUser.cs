@@ -16,5 +16,6 @@ namespace SocialNetwork.Models.Entities
         public DateTime BirthDate { get; set; }
 
         public string Interests { get; set; }
+        public byte[] Image { get; set; }
     }
 }
