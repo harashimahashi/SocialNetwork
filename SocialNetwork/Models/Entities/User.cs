@@ -15,13 +15,12 @@ namespace SocialNetwork.Models.Entities
         [EmailAddress(ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
 
-        [Required]
-        public string Password { get; set; }
-
         public string Residence { get; set; }
 
         public DateTime BirthDate { get; set; }
 
         public string Interests { get; set; }
+        
+        public byte[] Image { get; set; } 
     }
 }

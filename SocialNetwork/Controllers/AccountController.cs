@@ -51,7 +51,7 @@ namespace SocialNetwork.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Registration(User user)
+        public async Task<ActionResult> Registration(User user, [Required] string password)
         {
             if (ModelState.IsValid) {
                 ApplicationUser appUser = new ApplicationUser
@@ -61,10 +61,10 @@ namespace SocialNetwork.Controllers
                     LastName = user.LastName
                 };
 
-                IdentityResult result = await _userManager.CreateAsync(appUser, user.Password);
+                IdentityResult result = await _userManager.CreateAsync(appUser, password);
                 if (result.Succeeded) {
                     ViewBag.Message = "User Created Successfully";
-                    Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(appUser, user.Password, false, false);
+                    Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
                     if (signInResult.Succeeded)
                     {
                         return RedirectToAction("Index", "Publications");

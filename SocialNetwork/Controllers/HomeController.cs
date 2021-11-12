@@ -25,7 +25,16 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> EditUserPage()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(new UserAndImageViewModel { User = user });
+            return View(new UserAndImageViewModel { User = new User 
+                { 
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.UserName,
+                    Residence = user.Residence,
+                    BirthDate = user.BirthDate,
+                    Interests = user.Interests,
+                    Image = user.Image
+                }});
         }
 
         [HttpPost]
@@ -42,7 +51,16 @@ namespace SocialNetwork.Controllers
             if (result.Succeeded) {
                 return RedirectToAction(nameof(Index));
             }
-            return View(new UserAndImageViewModel { User = user });
+            return View(new UserAndImageViewModel { User = new User
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.UserName,
+                    Residence = user.Residence,
+                    BirthDate = user.BirthDate,
+                    Interests = user.Interests,
+                    Image = user.Image
+                }});
         }
 
         private byte[] ConvertImage(IFormFile formFile)
