@@ -25,42 +25,28 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> EditUserPage()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(new UserAndImageViewModel { User = new User 
-                { 
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.UserName,
-                    Residence = user.Residence,
-                    BirthDate = user.BirthDate,
-                    Interests = user.Interests,
-                    Image = user.Image
-                }});
+            return View(new UserAndImageViewModel { User = user });
         }
 
         [HttpPost]
         public async Task<ActionResult> EditUserPage(UserAndImageViewModel updateUser)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
             user.FirstName = updateUser.User.FirstName;
             user.LastName = updateUser.User.LastName;
             user.Residence = updateUser.User.Residence;
             user.BirthDate = updateUser.User.BirthDate.AddHours(2);
             user.Interests = updateUser.User.Interests;
             user.Image = updateUser.Image is not null ? ConvertImage(updateUser.Image) : null;
+
             var result = await _userManager.UpdateAsync(user);
+
             if (result.Succeeded) {
                 return RedirectToAction(nameof(Index));
             }
-            return View(new UserAndImageViewModel { User = new User
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.UserName,
-                    Residence = user.Residence,
-                    BirthDate = user.BirthDate,
-                    Interests = user.Interests,
-                    Image = user.Image
-                }});
+
+            return View(new UserAndImageViewModel { User = user });
         }
 
         private byte[] ConvertImage(IFormFile formFile)

@@ -21,6 +21,20 @@ namespace SocialNetwork.Models.Entities
 
         public string Interests { get; set; }
         
-        public byte[] Image { get; set; } 
+        public byte[] Image { get; set; }
+
+        public static implicit operator User(ApplicationUser u) 
+        {
+            return new User
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.UserName,
+                    Residence = u.Residence,
+                    BirthDate = u.BirthDate,
+                    Interests = u.Interests,
+                    Image = u.Image
+                };
+        }
     }
 }
