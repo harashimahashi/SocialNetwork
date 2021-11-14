@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Models.Entities;
 using SocialNetwork.Models.ViewModels;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SocialNetwork.Controllers
 {
@@ -23,7 +23,7 @@ namespace SocialNetwork.Controllers
             {
                 ret = await _userManager.FindByNameAsync(User.Identity.Name);
             }
-            else 
+            else
             {
                 var current = await _userManager.FindByNameAsync(User.Identity.Name);
                 var user = await _userManager.FindByNameAsync(name);
@@ -34,14 +34,7 @@ namespace SocialNetwork.Controllers
                 }
 
                 ret = user;
-                if (current.Subscribed.Contains(user.Id))
-                {
-                    ret.Subscribed = true;
-                }
-                else 
-                {
-                    ret.Subscribed = false;
-                }
+                ret.Subscribed = current.Subscribed.Contains(user.Id) ? true : false;
             }
             return View(ret);
         }
@@ -66,7 +59,8 @@ namespace SocialNetwork.Controllers
 
             var result = await _userManager.UpdateAsync(user);
 
-            if (result.Succeeded) {
+            if (result.Succeeded)
+            {
                 return RedirectToAction(nameof(Index));
             }
 

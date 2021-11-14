@@ -1,4 +1,7 @@
-﻿@{
+﻿@using SocialNetwork.Models.ViewModels
+@model LoginViewModel
+
+@{
     Layout = "_AccountLayout";
 }
 
@@ -17,19 +20,21 @@
             <h5 class="form-title">Вход</h5>
 
             <div class="form-fields">
-                <form class="needs-validation" asp-action="Login" method="post" novalidate>
+                <div class="text-danger" asp-validation-summary="All"></div>
+                <form class="needs-validation" asp-controller="Account" asp-action="Login" method="post" novalidate>
 
                     <div class="form-field">
-                        <label for="Mail" class="form-label">Почта</label>
-                        <input name="email" class="form-control" type="text" id="Mail" required>
+                        <label asp-for="Email" for="Email" class="form-label">Почта</label>
+                        <input name="Email" asp-for="Email" class="form-control" type="text" id="Email" required>
+                        <div asp-validation-for="Email" class="invalid-feedback"></div>
                         <div class="invalid-feedback">Пожалуйста, введите свою почту</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>
 
-
                     <div class="form-field">
-                        <label for="Password" class="form-label">Пароль</label>
-                        <input name="password" class="form-control" type="password" id="Password" required>
+                        <label asp-for="Password" for="Password" class="form-label">Пароль</label>
+                        <input name="Password" asp-for="Password" class="form-control" type="password" id="Password" required>
+                        <div asp-validation-for="Password" class="invalid-feedback"></div>
                         <div class="invalid-feedback">Пожалуйста, введите свой пароль</div>
                         <div class="valid-feedback">Ок!</div>
                     </div>
@@ -42,7 +47,6 @@
                 </form>
             </div>
         </div>
-
 
     </main>
 

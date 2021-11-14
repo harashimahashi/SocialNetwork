@@ -1,59 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.Models.Entities;
+using SocialNetwork.Models.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using SocialNetwork.Models.Entities;
 
 namespace SocialNetwork.Controllers
 {
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager { get; set; }
-        private SignInManager<ApplicationUser> _signInManager { get; set; }
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
 
-        public ActionResult Login()
-        {
-            return View();
-        }
+        private SignInManager<ApplicationUser> _signInManager { get; set; }
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) => 
+            (_userManager, _signInManager) = (userManager, signInManager);
+
+        public ActionResult Login() => View();
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Required][EmailAddress] string email, [Required] string password, string returnurl)
+        public async Task<IActionResult> Login(LoginViewModel loginModel, string returnurl)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser appUser = await _userManager.FindByNameAsync(email.Substring(0, email.IndexOf('@')));
+                ApplicationUser appUser = await _userManager.FindByNameAsync(loginModel.Email.Substring(0, loginModel.Email.IndexOf('@')));
                 if (appUser != null)
                 {
-                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, loginModel.Password, false, false);
                     if (result.Succeeded)
                     {
                         return Redirect(returnurl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(email), "Login Failed: Invalid Email or Password");
+                ModelState.AddModelError(nameof(loginModel.Email), "Login Failed: Invalid Email or Password");
             }
 
             return View();
         }
 
-        public ActionResult Registration()
-        {
-            return View();
-        }
+        public ActionResult Registration() => View();
 
         [HttpPost]
         public async Task<ActionResult> Registration(User user, [Required] string password)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 ApplicationUser appUser = new ApplicationUser
                 {
                     UserName = user.Email.Substring(0, user.Email.IndexOf('@')),
@@ -63,7 +57,8 @@ namespace SocialNetwork.Controllers
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(appUser, password);
-                if (result.Succeeded) {
+                if (result.Succeeded)
+                {
                     ViewBag.Message = "User Created Successfully";
                     Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
                     if (signInResult.Succeeded)

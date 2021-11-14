@@ -31,7 +31,8 @@ namespace SocialNetwork
             services.AddIdentity<ApplicationUser, Role>(op => op.User.AllowedUserNameCharacters = null)
                 .AddMongoDbStores<ApplicationUser, Role, Guid>
                 (
-                    mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
+                    mongoDbSettings.ConnectionString, 
+                    mongoDbSettings.DatabaseName
                 );
 
             //services.AddSingleton<UserService>();

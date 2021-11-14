@@ -9,6 +9,7 @@ namespace SocialNetwork.Models.ViewModels
         public string UserName { get; set; }
 
         public int Subscribers { get; set; }
+
         public bool Subscribed { get; set; }
 
         public static implicit operator UserWithNameAndSubscribersViewModel(ApplicationUser user)

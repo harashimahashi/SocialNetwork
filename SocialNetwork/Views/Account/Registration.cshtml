@@ -1,7 +1,8 @@
-﻿@{
+﻿@model User
+
+@{
     Layout = "_AccountLayout";
 }
-@model User
 
 <link rel="stylesheet" href="~/css/registration.css">
 
@@ -17,7 +18,7 @@
             <h5 class="form-title">Регистрация</h5>
 
             <div class="form-fields">
-                <form class="needs-validation" asp-action="Registration" method="post" novalidate>
+                <form class="needs-validation" asp-action="Registration" asp-controller="Account" method="post" novalidate>
 
                     <div class="row-form-field">
                         <div class="field-name">
