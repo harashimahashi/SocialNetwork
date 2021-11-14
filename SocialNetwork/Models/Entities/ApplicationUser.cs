@@ -19,7 +19,7 @@ namespace SocialNetwork.Models.Entities
         public string Interests { get; set; }
 
         public byte[] Image { get; set; }
-        public List<Guid> Subscribed { get; set; }
+        public List<Guid> Subscribed { get; set; } = new();
         public int Subscribers { get; set; } = 0;
     }
 }

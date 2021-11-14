@@ -55,6 +55,8 @@ namespace SocialNetwork
             {
                 endpoints.MapControllerRoute("user", "Home/",
                     new { Controller = "Home", action = "Index" });
+                endpoints.MapControllerRoute("user", "Home/EditUserPage",
+                    new { Controller = "Home", action = "EditUserPage" });
                 endpoints.MapControllerRoute("user", "Home/{name}", 
                     new { Controller = "Home", action = "Index" });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Publications}/{action=Index}/{id?}");

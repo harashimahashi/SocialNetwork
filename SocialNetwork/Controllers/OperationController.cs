@@ -22,14 +22,7 @@ namespace SocialNetwork.Controllers
             var subscriber = await _userManager.FindByNameAsync(User.Identity.Name);
             var subscribe = await _userManager.FindByNameAsync(name);
 
-            if (subscriber.Subscribed is not null)
-            {
-                subscriber.Subscribed.Add(subscribe.Id);
-            }
-            else
-            {
-                subscriber.Subscribed = new() { subscribe.Id };
-            }
+            subscriber.Subscribed.Add(subscribe.Id);
             subscribe.Subscribers++;
 
             var result1 = await _userManager.UpdateAsync(subscriber);

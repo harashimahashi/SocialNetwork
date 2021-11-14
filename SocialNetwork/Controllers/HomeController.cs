@@ -27,6 +27,12 @@ namespace SocialNetwork.Controllers
             {
                 var current = await _userManager.FindByNameAsync(User.Identity.Name);
                 var user = await _userManager.FindByNameAsync(name);
+
+                if (user is null)
+                {
+                    return View("Error 404");
+                }
+
                 ret = user;
                 if (current.Subscribed.Contains(user.Id))
                 {
