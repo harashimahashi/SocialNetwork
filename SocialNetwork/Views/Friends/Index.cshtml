@@ -1,6 +1,6 @@
 ﻿@using System.Collections.Generic
-@using SocialNetwork.Models.Entities
-@model List<User>
+@using SocialNetwork.Models.ViewModels
+@model List<UserWithNameAndSubscribersViewModel>
 
 <link rel="stylesheet" href="./css/friends-page.css">
 
@@ -27,22 +27,24 @@
                 </form>
             </div>
 
-            @foreach (User user in Model)
+            @foreach (var userModel in Model)
             {
-                <div class="item-user">
-                    @if (user.Image is not null)
-                    {
-                        <img class="item-user__image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(user.Image)) alt="foto">
-                    }
-                    else
-                    { 
-                        <img class="item-user__image" src="~/images/background.jpg" alt="foto">
-                    }
-                    <div class="item-user__title">
-                        @(user.FirstName + " " + user.LastName)
-                        <span class="item-user__city">@user.Residence</span>
+                <a asp-controller="Home" asp-action=@userModel.UserName>
+                    <div class="item-user">
+                        @if (userModel.User.Image is not null)
+                        {
+                            <img class="item-user__image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(userModel.User.Image)) alt="foto">
+                        }
+                        else
+                        { 
+                            <img class="item-user__image" src="~/images/background.jpg" alt="foto">
+                        }
+                        <div class="item-user__title">
+                            @(userModel.User.FirstName + " " + userModel.User.LastName)
+                            <span class="item-user__city">@userModel.User.Residence</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             }
 
         <!-- Список-панель справа -->
@@ -51,7 +53,6 @@
                 <div class="panel">
                     <ul>
                         <li>Все пользователи</li>
-                        <li>Мои друзья</li>
                         <li>Подписчики</li>
                     </ul>
                 </div>

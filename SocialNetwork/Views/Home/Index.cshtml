@@ -1,5 +1,5 @@
-﻿@using SocialNetwork.Models.Entities
-@model User
+﻿@using SocialNetwork.Models.ViewModels
+@model UserWithNameAndSubscribersViewModel
 
 <link rel="stylesheet" href="~/css/main-page.css">
 
@@ -13,9 +13,9 @@
 
     <div class="content">
         <div class="block-foto">
-            @if (Model.Image is not null)
+            @if (Model.User.Image is not null)
             {
-                <img class="foto-img" src=@("data:image/jpeg;base64," + Convert.ToBase64String(Model.Image)) alt="foto">
+                <img class="foto-img" src=@("data:image/jpeg;base64," + Convert.ToBase64String(Model.User.Image)) alt="foto">
             }
             else 
             { 
@@ -23,46 +23,51 @@
             }
             <a class="edit-btn" asp-controller="Home" asp-action="EditUserPage">Редактировать</a>
         </div>
+        @if (User.Identity.Name != Model.UserName) {
+            @if (!Model.Subscribed)
+            {
+                <a asp-controller="Operation" asp-action="Subscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Подписаться</a>
+            }
+            else {
+                <a asp-controller="Operation" asp-action="Unsubscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Отписаться</a>
+            }
+        }
         <div class="block-info">
-            <div class="block-info__name">@Model.FirstName @Model.LastName</div>
+            <div class="block-info__name">@Model.User.FirstName @Model.User.LastName</div>
             <hr/>
 
             <table class="table">
                 <tbody>
                     <tr>
                         <th class="col1">Имя</th>
-                        <td>@Model.FirstName</td>
+                        <td>@Model.User.FirstName</td>
                     </tr>
                     <tr>
                         <th class="col1">Фамилия</th>
-                        <td>@Model.LastName</td>
+                        <td>@Model.User.LastName</td>
                     </tr>
                     <tr>
                         <th class="col1">Место жительства:</th>
-                        <td>@{var residence = Model.Residence ?? "Установите место жительства"; @residence}</td>
+                        <td>@{var residence = Model.User.Residence ?? "Установите место жительства"; @residence}</td>
                     </tr>
                     <tr>
                         <th class="col1">Дата рождения:</th>
-                        <td>@{var date = Model.BirthDate == new DateTime() ? "Установите дату рождения" : Model.BirthDate.ToShortDateString(); @date}</td>
+                        <td>@{var date = Model.User.BirthDate == new DateTime() ? "Установите дату рождения" : Model.User.BirthDate.ToShortDateString(); @date}</td>
                     </tr>
                     <tr>
                         <th class="col1">Email:</th>
-                        <td>@Model.Email</td>
-                    </tr>
-                    <tr>
-                        <th class="col1">Количество друзей:</th>
-                        <td>11</td>
+                        <td>@Model.User.Email</td>
                     </tr>
                     <tr>
                         <th class="col1">Количество подписчиков:</th>
-                        <td>37</td>
+                        <td>@Model.Subscribers</td>
                     </tr>
                 </tbody>
 
             </table>
 
             <div class="block-info__interests">Интересы: </div>
-            <div>@{var interests = Model.Interests ?? "Напишите что-нибудь о себе"; @interests}</div>
+            <div>@{var interests = Model.User.Interests ?? "Напишите что-нибудь о себе"; @interests}</div>
 
         </div>
     </div>

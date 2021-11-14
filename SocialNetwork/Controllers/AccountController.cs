@@ -30,7 +30,7 @@ namespace SocialNetwork.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser appUser = await _userManager.FindByNameAsync(email);
+                ApplicationUser appUser = await _userManager.FindByNameAsync(email.Substring(0, email.IndexOf('@')));
                 if (appUser != null)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, password, false, false);
@@ -56,9 +56,10 @@ namespace SocialNetwork.Controllers
             if (ModelState.IsValid) {
                 ApplicationUser appUser = new ApplicationUser
                 {
-                    UserName = user.Email,
+                    UserName = user.Email.Substring(0, user.Email.IndexOf('@')),
                     FirstName = user.FirstName,
-                    LastName = user.LastName
+                    LastName = user.LastName,
+                    Email = user.Email
                 };
 
                 IdentityResult result = await _userManager.CreateAsync(appUser, password);

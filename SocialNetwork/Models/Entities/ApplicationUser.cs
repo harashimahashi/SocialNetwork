@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
 
@@ -18,5 +19,7 @@ namespace SocialNetwork.Models.Entities
         public string Interests { get; set; }
 
         public byte[] Image { get; set; }
+        public List<Guid> Subscribed { get; set; }
+        public int Subscribers { get; set; } = 0;
     }
 }

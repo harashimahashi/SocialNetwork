@@ -12,17 +12,18 @@ namespace SocialNetwork.Models
         public static async void EnsurePopulated(IApplicationBuilder app)
         {
             var userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            ApplicationUser user = await userManager.FindByNameAsync(maryEmail);
+            ApplicationUser user = await userManager.FindByNameAsync("maria");
             if (user == null)
             {
-                var res = await userManager.CreateAsync(
+                await userManager.CreateAsync(
                     new ApplicationUser
                     {
                         FirstName = "Мария",
                         LastName = "Литвинова",
                         Residence = "Москва",
                         BirthDate = new(1996, 8, 17),
-                        UserName = maryEmail,
+                        UserName = "maria",
+                        Email = maryEmail,
                         Interests = @"Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias ipsum soluta dolor magni maiores impedit, 
                                       temporibus saepe aspernatur totam, voluptate consequuntur. Animi nisi iusto rerum molestias voluptatem
                                       dicta vero eius?"

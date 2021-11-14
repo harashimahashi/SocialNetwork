@@ -16,10 +16,28 @@ namespace SocialNetwork.Controllers
 
         public HomeController(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(user);
+            UserWithNameAndSubscribersViewModel ret;
+            if (name is null)
+            {
+                ret = await _userManager.FindByNameAsync(User.Identity.Name);
+            }
+            else 
+            {
+                var current = await _userManager.FindByNameAsync(User.Identity.Name);
+                var user = await _userManager.FindByNameAsync(name);
+                ret = user;
+                if (current.Subscribed.Contains(user.Id))
+                {
+                    ret.Subscribed = true;
+                }
+                else 
+                {
+                    ret.Subscribed = false;
+                }
+            }
+            return View(ret);
         }
 
         public async Task<ActionResult> EditUserPage()

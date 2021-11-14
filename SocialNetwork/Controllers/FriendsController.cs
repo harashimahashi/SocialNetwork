@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SocialNetwork.Models.Entities;
+using SocialNetwork.Models.ViewModels;
 
 namespace SocialNetwork.Controllers
 {
@@ -18,7 +16,8 @@ namespace SocialNetwork.Controllers
 
         public IActionResult Index()
         {
-            return View(_userManager.Users.Take(6).ToList().Select(el => (User)el).ToList());
+            return View((from u in _userManager.Users.Take(6).ToList()
+                        where u.UserName != User.Identity.Name select (UserWithNameAndSubscribersViewModel)u).ToList());
         }
     }
 }

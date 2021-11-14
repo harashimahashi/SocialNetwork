@@ -29,7 +29,7 @@ namespace SocialNetwork.Models.Entities
                 {
                     FirstName = u.FirstName,
                     LastName = u.LastName,
-                    Email = u.UserName,
+                    Email = u.Email,
                     Residence = u.Residence,
                     BirthDate = u.BirthDate,
                     Interests = u.Interests,

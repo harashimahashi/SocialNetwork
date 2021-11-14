@@ -53,8 +53,10 @@ namespace SocialNetwork
 
             app.UseEndpoints(endpoints =>
             {
-                // Стандартный путь "{controller=Home}/{action=Index}/{id?}"
-                //endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute("user", "Home/",
+                    new { Controller = "Home", action = "Index" });
+                endpoints.MapControllerRoute("user", "Home/{name}", 
+                    new { Controller = "Home", action = "Index" });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Publications}/{action=Index}/{id?}");
             });
 
