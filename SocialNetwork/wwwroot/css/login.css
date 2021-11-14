@@ -89,3 +89,8 @@ a {
     font-weight: 500;
     color: rgb(74, 74, 221);
 }
+
+.validation-summary-errors ul {
+    list-style: none;
+    margin-left: -40px;
+}
