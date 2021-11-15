@@ -1,8 +1,7 @@
-﻿@using System.Collections.Generic
-@using SocialNetwork.Models.ViewModels
-@model List<UserWithNameAndSubscribersViewModel>
+﻿@using SocialNetwork.Models.ViewModels
+@model UserNamesAndCategoryViewModel
 
-<link rel="stylesheet" href="./css/friends-page.css">
+<link rel="stylesheet" href="~/css/friends-page.css">
 
 <!-- Страница друзей -->
 <section class="home-section">
@@ -22,12 +21,13 @@
             <!-- Форма поиска -->
             <div class="search">
                 <form>
-                    <input type="text" placeholder="Найти...">
+                    <input name="match" type="text" placeholder="Найти...">
+                    <input name="category" type="hidden" value=@Model.Category>
                     <button type="submit"><i class="far fa-search"></i></button>
                 </form>
             </div>
 
-            @foreach (var userModel in Model)
+            @foreach (var userModel in Model.UserNames)
             {
                 <div class="item-user">
                     @if (userModel.User.Image is not null)
@@ -53,8 +53,16 @@
             <div>
                 <div class="panel">
                     <ul>
-                        <li>Все пользователи</li>
-                        <li>Подписчики</li>
+                        @if (Model.Category == "Subscribers")
+                        {
+                            <li><a asp-action="All">Все пользователи</a></li>
+                            <li class="selected"><a asp-action="Subscribers">Подписчики</a></li>
+                        }
+                        else
+                        {
+                            <li class="selected"><a asp-action="All">Все пользователи</a></li>
+                            <li><a asp-action="Subscribers">Подписчики</a></li>
+                        }
                     </ul>
                 </div>
             </div>

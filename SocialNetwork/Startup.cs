@@ -54,12 +54,16 @@ namespace SocialNetwork
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("user", "Home/",
+                endpoints.MapControllerRoute("account", "Home/",
                     new { Controller = "Home", action = "Index" });
-                endpoints.MapControllerRoute("user", "Home/EditUserPage",
+                endpoints.MapControllerRoute("edit", "Home/EditUserPage",
                     new { Controller = "Home", action = "EditUserPage" });
                 endpoints.MapControllerRoute("user", "Home/{name}", 
                     new { Controller = "Home", action = "Index" });
+                endpoints.MapControllerRoute("people", "People/",
+                    new { Controller = "People", action = "Index" });
+                endpoints.MapControllerRoute("category", "People/{category}",
+                    new { Controller = "People", action = "Index" });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Publications}/{action=Index}/{id?}");
             });
 

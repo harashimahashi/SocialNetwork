@@ -18,7 +18,7 @@ namespace SocialNetwork.Controllers
 
         public async Task<IActionResult> Index(string name)
         {
-            UserWithNameAndSubscribersViewModel ret;
+            UserNameAndSubscribersViewModel ret;
             if (name is null)
             {
                 ret = await _userManager.FindByNameAsync(User.Identity.Name);
