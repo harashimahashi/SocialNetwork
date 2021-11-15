@@ -1,8 +1,6 @@
-﻿using SocialNetwork.Models.Interfaces;
-
-namespace SocialNetwork.Models
+﻿namespace SocialNetwork.Models.Interfaces
 {
-    public class SocialNetworkDatabaseSettings : ISocialNetworkDatabaseSettings
+    public interface ISocialNetworkDatabaseSettings
     {
         public string PublicationsCollectionName { get; set; }
 

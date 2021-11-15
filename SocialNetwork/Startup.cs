@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SocialNetwork.Models;
 using SocialNetwork.Models.Entities;
+using SocialNetwork.Models.Interfaces;
+using SocialNetwork.Services;
 
 namespace SocialNetwork
 {
@@ -21,13 +23,14 @@ namespace SocialNetwork
         {
             services.AddControllersWithViews();
 
-            //services.Configure<SocialNetworkDatabaseSettings>(
-            //    Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)));
+            var dbSection = Configuration.GetSection(nameof(SocialNetworkDatabaseSettings));
 
-            //services.AddSingleton<ISocialNetworkDatabaseSettings>(sp =>
-            //    sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
+            services.Configure<SocialNetworkDatabaseSettings>(dbSection);
 
-            var mongoDbSettings = Configuration.GetSection(nameof(SocialNetworkDatabaseSettings)).Get<SocialNetworkDatabaseSettings>();
+            services.AddSingleton<ISocialNetworkDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<SocialNetworkDatabaseSettings>>().Value);
+
+            var mongoDbSettings = dbSection.Get<SocialNetworkDatabaseSettings>();
             services.AddIdentity<ApplicationUser, Role>(op => op.User.AllowedUserNameCharacters = null)
                 .AddMongoDbStores<ApplicationUser, Role, Guid>
                 (
@@ -35,7 +38,7 @@ namespace SocialNetwork
                     mongoDbSettings.DatabaseName
                 );
 
-            //services.AddSingleton<UserService>();
+            services.AddSingleton<PublicationService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,7 +50,6 @@ namespace SocialNetwork
             }
 
             app.UseStaticFiles();
-            //app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

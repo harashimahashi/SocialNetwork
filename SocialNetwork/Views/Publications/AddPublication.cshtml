@@ -1,4 +1,7 @@
-﻿<link rel="stylesheet" href="~/css/publications-form.css">
+﻿@using SocialNetwork.Models.ViewModels
+@model PublicationAndImageViewModel
+
+<link rel="stylesheet" href="~/css/publications-form.css">
 
 <section class="home-section">
 
@@ -11,28 +14,25 @@
     <!-- Блок формы с полями для заполнения -->
 
     <div class="form">
-        <form class="needs-validation" novalidate>
+        <form asp-action="AddPublication" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="block-form">
 
                 <div class="block-input">
-                    <label for="Name" class="form-label">Название публикации</label>
-                    <input class="form-control form-control-sm" type="text" id="Name"
-                           value="В городке появились инопланетяне" required>
+                    <label asp-for="@Model.Publication.Heading" class="form-label">Название публикации</label>
+                    <input asp-for="@Model.Publication.Heading" class="form-control form-control-sm" type="text" required>
                     <div class="invalid-feedback">Пожалуйста, укажите название публикации</div>
                     <div class="valid-feedback">Ок!</div>
                 </div>
 
                 <div class="block-input">
-                    <label for="Annotation" class="form-label">Текст публикации</label>
-                    <textarea class="form-control annotation" id="Annotation" rows="10" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel itaque quia eos! Quidem, magni vitae commodi iure amet minus enim labore odit porro quod, earum ad cumque corrupti laboriosam itaque!
+                    <label asp-for="@Model.Publication.Content" class="form-label">Текст публикации</label>
+                    <textarea asp-for="@Model.Publication.Content" class="form-control annotation"  rows="10" required>
                     </textarea>
                     <div class="invalid-feedback">Пожалуйста, внесите текст публикации</div>
                     <div class="valid-feedback">Ок!</div>
                 </div>
                 <div>
-                    <input type="file" accept="image/jpeg" class="form-control form-control-sm" required>
-                    <div class="invalid-feedback">Пожалуйста, загрузите картинку для публикации</div>
-                    <div class="valid-feedback">Ок!</div>
+                    <input asp-for="Image" type="file" accept="image/jpeg" class="form-control form-control-sm">
                 </div>
             </div>
 
