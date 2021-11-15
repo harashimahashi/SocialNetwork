@@ -13,5 +13,14 @@ namespace SocialNetwork.Models.Entities
         public string Content { get; set; }
 
         public byte[] Image { get; set; }
+
+        public static implicit operator Publication(ApplicationPublication pub)
+        {
+            return new() { 
+                Heading = pub.Heading,
+                Content = pub.Content,
+                Image = pub.Image
+            };
+        }
     }
 }

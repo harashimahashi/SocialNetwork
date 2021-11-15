@@ -1,4 +1,6 @@
-﻿<link rel="stylesheet" href="~/css/publications.css">
+﻿@model List<Publication>
+
+<link rel="stylesheet" href="~/css/publications.css">
 
 <section class="home-section">
 
@@ -25,94 +27,95 @@
             </div>
 
             <a class="add-btn" asp-action="AddPublication">Добавить публикацию</a>
+    
+            @foreach (var pub in Model)
+            {
+                <div class="item-publication">
 
-            <div class="item-publication">
-
-                <div class="user">
-                    <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
-                    <div class="item-publication__user-title">Мария Литвинова</div>
-                </div>
-
-                <div class="block-pulication">
-                    <div class="item-publication__title">В городке появились инопланетяне</div>
-                    <div class="item-publication__description">
-                        <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, at vel cum dolores
-                            omnis aliquam rerum a ducimus debitis eius repellendus sint iure tempore temporibus
-                            atque
-                            consequuntur modi, repellat totam?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, aspernatur labore
-                            laboriosam possimus natus voluptatem voluptas qui dignissimos dolor obcaecati iste
-                            consectetur veniam voluptatibus eos, sequi rem itaque? Harum, reprehenderit.
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat labore autem
-                            accusantium
-                            amet praesentium architecto voluptatibus quo delectus omnis temporibus, minus ullam
-                            dolorum,
-                            beatae quidem, dignissimos possimus sunt quis sed.
-                        </span>
+                    <div class="user">
+                        @if (pub.Owner.Image is not null)
+                        {
+                            <img class="item-publication__user-image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Owner.Image)) alt="foto">
+                        }
+                        else
+                        { 
+                            <img class="item-publication__user-image" src="~/images/default_avatar.jpg" alt="foto">
+                        }
+                        <div class="item-publication__user-title">@pub.Owner.FirstName @pub.Owner.LastName</div>
                     </div>
 
-                    <div class="block-image">
-                        <img class="item-publication__image" src="./images/publication.jpg" alt="foto">
-                    </div>
-
-
-                    <div class="item-publication__icons">
-                        <div class="icon-like">
-                            <i class="fas fa-heart"></i>
-                            <span class="count">39</span>
+                    <div class="block-pulication">
+                        <div class="item-publication__title">@pub.Heading</div>
+                        <div class="item-publication__description">
+                            <span>
+                                @pub.Content
+                            </span>
                         </div>
 
-                        <div class="icon-comment">
-                            <i class="fas fa-comment"></i>
-                            <span class="count">15</span>
-                        </div>
-                    </div>
-                </div>
+                        @if (pub.Image is not null)
+                        {
+                            <div class="block-image">
+                                <img class="item-publication__image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Image)) alt="foto">
+                            </div>
+                        }
 
-                <hr />
-
-                <div class="comments">
-                    <div class="user-comment">
-                        <div class="user-comment__user">
-                            <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
-                            <div class="item-publication__user-title">Иван Нимеринов</div>
-                        </div>
-
-                        <div class="user-comment__text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum magni consectetur ipsum
-                            veniam, porro tempora
-                            odit,
-                            possimus omnis molestiae perferendis natus commodi veritatis. Et perspiciatis molestiae
-                            ab, eaque numquam earum?
-                        </div>
-
-                        <div class="block-down">
-                            <div class="user-comment__icons">
-                                <div class="icon-comment-like">
-                                    <i class="fas fa-heart"></i>
-                                    <span class="count">3</span>
-                                </div>
+                        <div class="item-publication__icons">
+                            <div class="icon-like">
+                                <i class="fas fa-heart"></i>
+                                <span class="count">39</span>
                             </div>
 
-                            <form>
-                                <button class="btn-answer" type="submit">Ответить</button>
-                            </form>
+                            <div class="icon-comment">
+                                <i class="fas fa-comment"></i>
+                                <span class="count">15</span>
+                            </div>
                         </div>
                     </div>
 
-                    <form>
-                        <button class="more-comments">Показать остальные...</button>
-                    </form>
-                </div>
+                    <hr />
 
-                <div class="user-new-comment__user">
-                    <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
-                    <textarea id="textarea" placeholder="Новый комментарий..."></textarea>
-                    <button class="btn-send"><i class="fas fa-angle-double-right"></i></button>
-                </div>
+                    <div class="comments">
+                        <div class="user-comment">
+                            <div class="user-comment__user">
+                                <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                                <div class="item-publication__user-title">Иван Нимеринов</div>
+                            </div>
 
-            </div>
+                            <div class="user-comment__text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum magni consectetur ipsum
+                                veniam, porro tempora
+                                odit,
+                                possimus omnis molestiae perferendis natus commodi veritatis. Et perspiciatis molestiae
+                                ab, eaque numquam earum?
+                            </div>
+
+                            <div class="block-down">
+                                <div class="user-comment__icons">
+                                    <div class="icon-comment-like">
+                                        <i class="fas fa-heart"></i>
+                                        <span class="count">3</span>
+                                    </div>
+                                </div>
+
+                                <form>
+                                    <button class="btn-answer" type="submit">Ответить</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <form>
+                            <button class="more-comments">Показать остальные...</button>
+                        </form>
+                    </div>
+
+                    <div class="user-new-comment__user">
+                        <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                        <textarea id="textarea" placeholder="Новый комментарий..."></textarea>
+                        <button class="btn-send"><i class="fas fa-angle-double-right"></i></button>
+                    </div>
+
+                </div>
+            }
             <div class="block-margin"></div>
         </div>
     </div>

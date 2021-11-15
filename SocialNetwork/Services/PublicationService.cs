@@ -2,6 +2,8 @@
 using SocialNetwork.Models.Interfaces;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SocialNetwork.Services
@@ -20,6 +22,8 @@ namespace SocialNetwork.Services
 
         public List<ApplicationPublication> Get() =>
             _publications.Find(Publication => true).ToList();
+
+        public async Task<List<ApplicationPublication>> GetPublicationsByOwnerIdsAsync(List<Guid> ids) { return (await _publications.FindAsync(pub => ids.Contains(pub.Owner))).ToList(); }
 
         public async Task CreateAsync(ApplicationPublication Publication)
         {

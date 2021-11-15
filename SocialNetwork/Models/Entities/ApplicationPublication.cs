@@ -12,6 +12,8 @@ namespace SocialNetwork.Models.Entities
         public string Id { get; set; }
 
         public Guid Owner { get; set; }
+        
+        public DateTime Created { get; set; } 
 
         public string Heading { get; set; }
         
