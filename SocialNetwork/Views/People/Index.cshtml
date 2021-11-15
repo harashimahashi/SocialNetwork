@@ -20,7 +20,7 @@
 
             <!-- Форма поиска -->
             <div class="search">
-                <form>
+                <form asp-action="Index" method="post">
                     <input name="match" type="text" placeholder="Найти...">
                     <input name="category" type="hidden" value=@Model.Category>
                     <button type="submit"><i class="far fa-search"></i></button>
