@@ -21,9 +21,18 @@ namespace SocialNetwork.Services
         }
 
         public List<ApplicationPublication> Get() =>
-            _publications.Find(Publication => true).ToList();
+            _publications.Find(_ => true).ToList();
 
-        public async Task<List<ApplicationPublication>> GetPublicationsByOwnerIdsAsync(List<Guid> ids) { return (await _publications.FindAsync(pub => ids.Contains(pub.Owner))).ToList(); }
+        public async Task<ApplicationPublication> GetByIdAsync(string id) => (await _publications.FindAsync(pub => pub.Id == id)).First();
+
+        public async Task<List<ApplicationPublication>> GetByOwnerIdsAsync(List<Guid> ids) 
+            => await (await _publications.FindAsync(pub => ids.Contains(pub.Owner))).ToListAsync();
+
+        public async Task<ApplicationPublication> UpdateOneAsync<T>(string id, string fieldName, T value) 
+            => await _publications.FindOneAndUpdateAsync(el => el.Id == id, Builders<ApplicationPublication>.Update.AddToSet(fieldName, value));
+
+        public async Task UpdateOneAsync(string id, ApplicationPublication pub)
+            => await _publications.ReplaceOneAsync(el => el.Id == id, pub);
 
         public async Task CreateAsync(ApplicationPublication Publication)
         {

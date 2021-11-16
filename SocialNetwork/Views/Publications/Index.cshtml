@@ -1,4 +1,5 @@
-﻿@model List<Publication>
+﻿@using SocialNetwork.Models.ViewModels 
+@model PublicationsViewModel
 
 <link rel="stylesheet" href="~/css/publications.css">
 
@@ -26,44 +27,50 @@
                 </form>
             </div>
 
-            <a class="add-btn" asp-action="AddPublication">Добавить публикацию</a>
+            <a class="add-btn" asp-action="Addpublication">Добавить публикацию</a>
     
-            @foreach (var pub in Model)
+            @foreach (var pub in Model.Publications)
             {
                 <div class="item-publication">
 
                     <div class="user">
-                        @if (pub.Owner.Image is not null)
+                        @if (pub.Publication.Owner.Image is not null)
                         {
-                            <img class="item-publication__user-image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Owner.Image)) alt="foto">
+                            <img class="item-publication__user-image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Publication.Owner.Image)) alt="foto">
                         }
                         else
                         { 
                             <img class="item-publication__user-image" src="~/images/default_avatar.jpg" alt="foto">
                         }
-                        <div class="item-publication__user-title">@pub.Owner.FirstName @pub.Owner.LastName</div>
+                        <div class="item-publication__user-title">@pub.Publication.Owner.FirstName @pub.Publication.Owner.LastName</div>
                     </div>
 
                     <div class="block-pulication">
-                        <div class="item-publication__title">@pub.Heading</div>
+                        <div class="item-publication__title">@pub.Publication.Heading</div>
                         <div class="item-publication__description">
                             <span>
-                                @pub.Content
+                                @pub.Publication.Content
                             </span>
                         </div>
 
-                        @if (pub.Image is not null)
+                        @if (pub.Publication.Image is not null)
                         {
                             <div class="block-image">
-                                <img class="item-publication__image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Image)) alt="foto">
+                                <img class="item-publication__image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(pub.Publication.Image)) alt="foto">
                             </div>
                         }
 
                         <div class="item-publication__icons">
-                            <div class="icon-like">
-                                <i class="fas fa-heart"></i>
-                                <span class="count">39</span>
-                            </div>
+                            
+                            <form asp-action=@((pub.IsLiked ? "Unlike" : "Like").ToString()) method="post">
+                                <input name="publication" type="hidden" value=@pub.Publication.Id>
+                                <button type="submit">
+                                    <div class="icon-like">
+                                        <i class="@((pub.IsLiked ? "fas" : "fad").ToString()) fa-heart"></i>
+                                        <span class="count">@pub.Likes</span>
+                                    </div>
+                                </button>
+                            </form>
 
                             <div class="icon-comment">
                                 <i class="fas fa-comment"></i>
@@ -109,7 +116,14 @@
                     </div>
 
                     <div class="user-new-comment__user">
-                        <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
+                        @if (Model.Current.Image is not null)
+                        {
+                            <img class="item-publication__user-image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(Model.Current.Image)) alt="foto">
+                        }
+                        else
+                        {
+                            <img class="item-publication__user-image" src="~/images/default_avatar.jpg" alt="foto">
+                        }
                         <textarea id="textarea" placeholder="Новый комментарий..."></textarea>
                         <button class="btn-send"><i class="fas fa-angle-double-right"></i></button>
                     </div>

@@ -10,6 +10,7 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.Controllers
 {
@@ -29,7 +30,7 @@ namespace SocialNetwork.Controllers
             List<Guid> ids = new() { current.Id };
             ids.AddRange(current.Subscribed);
 
-            var pubs = await _publicationService.GetPublicationsByOwnerIdsAsync(ids);
+            var pubs = await _publicationService.GetByOwnerIdsAsync(ids);
             pubs.Sort((el1, el2) => Convert.ToInt32(el1.Created < el2.Created));
 
             List<ApplicationUser> users = new() { current };
@@ -37,12 +38,21 @@ namespace SocialNetwork.Controllers
                 users.Add(await _userManager.FindByIdAsync(ids[i].ToString()));
             }
 
-            return View(pubs.Select(el => {
-                var pub = (Publication)el;
-                pub.Owner = (from u in users where u.Id == el.Owner select (User)u).First();
+            return View(new PublicationsViewModel
+            {
+                Publications = pubs.Select(el =>
+                {
+                    var pub = (Publication)el;
+                    pub.Owner = (from u in users where u.Id == el.Owner select (User)u).First();
 
-                return pub;
-            }).ToList());
+                    return new PublicationViewModel { 
+                        Publication = pub,
+                        Likes = el.Liked.Count,
+                        IsLiked = el.Liked.Contains(current.Id)
+                    };
+                }).ToList(),
+                Current = current
+            });
         }
 
         public IActionResult AddPublication() => View();
@@ -67,6 +77,26 @@ namespace SocialNetwork.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Like([Required] string publication)
+        {
+            var current = await _userManager.FindByNameAsync(User.Identity.Name);
+            await _publicationService.UpdateOneAsync(publication, "Liked", current.Id);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Unlike([Required] string publication)
+        {
+            var current = await _userManager.FindByNameAsync(User.Identity.Name);
+            var pub = await _publicationService.GetByIdAsync(publication);
+            pub.Liked.Remove(current.Id);
+            await _publicationService.UpdateOneAsync(publication, pub);
+
+            return RedirectToAction("Index");
         }
 
         private byte[] ConvertImage(IFormFile formFile)
