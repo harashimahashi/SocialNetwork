@@ -6,6 +6,7 @@ using SocialNetwork.Models.Entities;
 using SocialNetwork.Models.ViewModels;
 using System.IO;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.Controllers
 {
@@ -65,6 +66,48 @@ namespace SocialNetwork.Controllers
             }
 
             return View(new UserAndImageViewModel { User = user });
+        }
+
+        public async Task<IActionResult> Subscribe([Required] string name, string returnurl)
+        {
+            var subscriber = await _userManager.FindByNameAsync(User.Identity.Name);
+            var subscribe = await _userManager.FindByNameAsync(name);
+
+            subscriber.Subscribed.Add(subscribe.Id);
+            subscribe.Subscribers++;
+
+            var result1 = await _userManager.UpdateAsync(subscriber);
+            var result2 = await _userManager.UpdateAsync(subscribe);
+
+            if (result1.Succeeded && result2.Succeeded)
+            {
+                return Redirect(returnurl);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        public async Task<IActionResult> Unsubscribe([Required] string name, string returnurl)
+        {
+            var subscriber = await _userManager.FindByNameAsync(User.Identity.Name);
+            var subscribe = await _userManager.FindByNameAsync(name);
+
+            subscriber.Subscribed.Remove(subscribe.Id);
+            subscribe.Subscribers--;
+
+            var result1 = await _userManager.UpdateAsync(subscriber);
+            var result2 = await _userManager.UpdateAsync(subscribe);
+
+            if (result1.Succeeded && result2.Succeeded)
+            {
+                return Redirect(returnurl);
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         private byte[] ConvertImage(IFormFile formFile)

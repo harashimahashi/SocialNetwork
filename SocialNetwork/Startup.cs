@@ -61,6 +61,10 @@ namespace SocialNetwork
                     new { Controller = "Home", action = "Index" });
                 endpoints.MapControllerRoute("edit", "Home/EditUserPage",
                     new { Controller = "Home", action = "EditUserPage" });
+                endpoints.MapControllerRoute("edit", "Home/Subscribe/*",
+                    new { Controller = "Home", action = "Subscribe" });
+                endpoints.MapControllerRoute("edit", "Home/Unsubscribe/*",
+                    new { Controller = "Home", action = "Unsubscribe" });
                 endpoints.MapControllerRoute("user", "Home/{name}", 
                     new { Controller = "Home", action = "Index" });
                 endpoints.MapControllerRoute("people", "People/",

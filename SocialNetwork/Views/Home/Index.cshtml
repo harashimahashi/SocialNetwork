@@ -26,11 +26,11 @@
             {
                 @if (!Model.Subscribed)
                 {
-                    <a asp-controller="Operation" asp-action="Subscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Подписаться</a>
+                    <a asp-action="Subscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Подписаться</a>
                 }
                 else
                 {
-                    <a asp-controller="Operation" asp-action="Unsubscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Отписаться</a>
+                    <a asp-action="Unsubscribe" asp-route-name="@Model.UserName" asp-route-returnurl="/Home/@Model.UserName" class="edit-btn">Отписаться</a>
                 }
             }
             else
