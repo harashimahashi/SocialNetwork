@@ -39,6 +39,7 @@ namespace SocialNetwork
                 );
 
             services.AddSingleton<PublicationService>();
+            services.AddSingleton<CommentService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

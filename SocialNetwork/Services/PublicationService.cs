@@ -38,8 +38,5 @@ namespace SocialNetwork.Services
         {
             await _publications.InsertOneAsync(Publication);
         }
-
-        public void Update(string id, ApplicationPublication PublicationIn) =>
-            _publications.ReplaceOne(Publication => Publication.Id == id, PublicationIn);
     }
 }

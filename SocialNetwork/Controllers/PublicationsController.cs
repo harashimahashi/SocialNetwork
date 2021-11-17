@@ -21,8 +21,10 @@ namespace SocialNetwork.Controllers
 
         private readonly PublicationService _publicationService;
 
-        public PublicationsController(UserManager<ApplicationUser> userManager, PublicationService publicationService) 
-            => (_userManager, _publicationService) = (userManager, publicationService);
+        private readonly CommentService _commentService;
+
+        public PublicationsController(UserManager<ApplicationUser> userManager, PublicationService publicationService, CommentService commentService) 
+            => (_userManager, _publicationService, _commentService) = (userManager, publicationService, commentService);
 
         public async Task<IActionResult> Index()
         {
@@ -40,17 +42,37 @@ namespace SocialNetwork.Controllers
 
             return View(new PublicationsViewModel
             {
-                Publications = pubs.Select(el =>
+                Publications = (await Task.WhenAll(pubs.Select(async el =>
                 {
                     var pub = (Publication)el;
                     pub.Owner = (from u in users where u.Id == el.Owner select (User)u).First();
+                    var coms = await _commentService.GetByPublicationIdAsync(el.Id);
+                    coms.Sort((el1, el2) => Convert.ToInt32(el1.Created > el2.Created));
 
-                    return new PublicationViewModel { 
+                    return new PublicationViewModel {
                         Publication = pub,
                         Likes = el.Liked.Count,
-                        IsLiked = el.Liked.Contains(current.Id)
-                    };
-                }).ToList(),
+                        IsLiked = el.Liked.Contains(current.Id),
+                        Comments = (await Task.WhenAll(coms.Select(async c => {
+                            var com = (Comment)c;
+                            var owner = users.Find(u => u.Id == c.Owner);
+                            if (owner is null)
+                            {
+                                com.Owner = await _userManager.FindByIdAsync(c.Owner.ToString());
+                            }
+                            else {
+                                com.Owner = owner;
+                            }
+
+                            return new CommentViewModel
+                            {
+                                Comment = com,
+                                Likes = c.Liked.Count,
+                                IsLiked = c.Liked.Contains(current.Id)
+                            };
+                        }))).ToList()
+                };
+                }))).ToList(),
                 Current = current
             });
         }
@@ -80,21 +102,56 @@ namespace SocialNetwork.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Like([Required] string publication)
+        public async Task<IActionResult> Like([Required] string type, [Required] string id)
         {
             var current = await _userManager.FindByNameAsync(User.Identity.Name);
-            await _publicationService.UpdateOneAsync(publication, "Liked", current.Id);
+
+            if (type == "publication")
+            {
+                await _publicationService.UpdateOneAsync(id, "Liked", current.Id);
+            }
+            else
+            {
+                await _commentService.UpdateOneAsync(id, "Liked", current.Id);
+            }
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Unlike([Required] string publication)
+        public async Task<IActionResult> Unlike([Required] string type, [Required] string id)
         {
             var current = await _userManager.FindByNameAsync(User.Identity.Name);
-            var pub = await _publicationService.GetByIdAsync(publication);
-            pub.Liked.Remove(current.Id);
-            await _publicationService.UpdateOneAsync(publication, pub);
+
+            if (type == "publication")
+            {
+                var pub = await _publicationService.GetByIdAsync(id);
+                pub.Liked.Remove(current.Id);
+                await _publicationService.UpdateOneAsync(id, pub);
+            }
+            else
+            {
+                var com = await _commentService.GetByIdAsync(id);
+                com.Liked.Remove(current.Id);
+                await _commentService.UpdateOneAsync(id, com);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment([Required] string publication, string content)
+        {
+            var current = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            ApplicationComment com = new() {
+                Owner = current.Id,
+                Publication = publication,
+                Created = DateTime.Now,
+                Content = content
+            };
+
+            await _commentService.CreateAsync(com);
 
             return RedirectToAction("Index");
         }

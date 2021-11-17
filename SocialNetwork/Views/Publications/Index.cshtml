@@ -17,16 +17,6 @@
                 <h5>Все публикации</h5>
             </div>
 
-            <!-- Форма поиска -->
-            <div class="search">
-                <form class="form-seacrh">
-                    <input class="input-search" type="text" placeholder="Найти...">
-                    <button class="button-search" type="submit">
-                        <i class="far fa-search"></i>
-                    </button>
-                </form>
-            </div>
-
             <a class="add-btn" asp-action="Addpublication">Добавить публикацию</a>
     
             @foreach (var pub in Model.Publications)
@@ -63,7 +53,8 @@
                         <div class="item-publication__icons">
                             
                             <form asp-action=@((pub.IsLiked ? "Unlike" : "Like").ToString()) method="post">
-                                <input name="publication" type="hidden" value=@pub.Publication.Id>
+                                <input name="type" type="hidden" value="publication">
+                                <input name="id" type="hidden" value=@pub.Publication.Id>
                                 <button type="submit">
                                     <div class="icon-like">
                                         <i class="@((pub.IsLiked ? "fas" : "fad").ToString()) fa-heart"></i>
@@ -74,46 +65,50 @@
 
                             <div class="icon-comment">
                                 <i class="fas fa-comment"></i>
-                                <span class="count">15</span>
+                                <span class="count">@pub.Comments.Count</span>
                             </div>
                         </div>
                     </div>
 
                     <hr />
 
-                    <div class="comments">
-                        <div class="user-comment">
-                            <div class="user-comment__user">
-                                <img class="item-publication__user-image" src="./images/foto.jpg" alt="foto">
-                                <div class="item-publication__user-title">Иван Нимеринов</div>
-                            </div>
-
-                            <div class="user-comment__text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum magni consectetur ipsum
-                                veniam, porro tempora
-                                odit,
-                                possimus omnis molestiae perferendis natus commodi veritatis. Et perspiciatis molestiae
-                                ab, eaque numquam earum?
-                            </div>
-
-                            <div class="block-down">
-                                <div class="user-comment__icons">
-                                    <div class="icon-comment-like">
-                                        <i class="fas fa-heart"></i>
-                                        <span class="count">3</span>
-                                    </div>
+                    @foreach (var com in pub.Comments)
+                    {
+                        <div class="comments">
+                            <div class="user-comment">
+                                <div class="user-comment__user">
+                                    @if (com.Comment.Owner.Image is not null)
+                                    {
+                                        <img class="item-publication__user-image" src=@("data:image/jpeg;base64," + Convert.ToBase64String(com.Comment.Owner.Image)) alt="foto">
+                                    }
+                                    else
+                                    { 
+                                        <img class="item-publication__user-image" src="~/images/default_avatar.jpg" alt="foto">
+                                    }
+                                    <div class="item-publication__user-title">@com.Comment.Owner.FirstName @com.Comment.Owner.LastName</div>
                                 </div>
 
-                                <form>
-                                    <button class="btn-answer" type="submit">Ответить</button>
-                                </form>
+                                <div class="user-comment__text">
+                                    @com.Comment.Content
+                                </div>
+
+                                <div class="block-down">
+                                    <div class="user-comment__icons">
+                                        <form asp-action=@((com.IsLiked ? "Unlike" : "Like").ToString()) method="post">
+                                            <input name="type" type="hidden" value="comment">
+                                            <input name="id" type="hidden" value=@com.Comment.Id>
+                                            <button type="submit">
+                                                <div class="icon-comment-like">
+                                                    <i class="@((com.IsLiked ? "fas" : "fad").ToString()) fa-heart"></i>
+                                                    <span class="count">@com.Likes</span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <form>
-                            <button class="more-comments">Показать остальные...</button>
-                        </form>
-                    </div>
+                    }
 
                     <div class="user-new-comment__user">
                         @if (Model.Current.Image is not null)
@@ -124,8 +119,11 @@
                         {
                             <img class="item-publication__user-image" src="~/images/default_avatar.jpg" alt="foto">
                         }
-                        <textarea id="textarea" placeholder="Новый комментарий..."></textarea>
-                        <button class="btn-send"><i class="fas fa-angle-double-right"></i></button>
+                        <form asp-action="AddComment" method="post">
+                            <input name="publication" type="hidden" value=@pub.Publication.Id>
+                            <textarea name="content" id="textarea" placeholder="Новый комментарий..."></textarea>
+                            <button class="btn-send" type="submit"><i class="fas fa-angle-double-right"></i></button>
+                        </form>
                     </div>
 
                 </div>
